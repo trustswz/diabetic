@@ -86,11 +86,13 @@ def load():
 def calculate(test_hist=None, train_hists=None, train_scores=None):
     scores = []
     for i in xrange(0,len(train_hists)):
-        scores.append(dist.euclidean(train_hists[i],test_hist), train_scores[i]);
+        distance = dist.euclidean(train_hists[i],test_hist)
+        if distance > 0:
+            scores.append((dist.euclidean(train_hists[i],test_hist), train_scores[i]));
     sorted_scores = np.sort(scores, axis=0)
     total = 0
     for i in xrange(0,KNN):
-        total += sorted_scores[i]
+        total += sorted_scores[i][1]
     total /= float32(KNN)
     return math.round(total)
 
